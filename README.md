@@ -144,3 +144,4 @@ The application uses Serilog for structured logging:
 ## CORS
 
 CORS is configured to allow all origins in development. Update the CORS policy for production use.
+# livescore-data-mapping-api
