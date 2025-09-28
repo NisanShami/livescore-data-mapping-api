@@ -1,0 +1,65 @@
+{
+  "DownloadConfig": {
+    "DaysBack": 1,
+    "RedshiftApiUrl": "https://di-history-viewer-realtime-api.prod-din.lsports-gcp.cloud/graphql",
+    "RequestBody": "{{\"query\":\"query MyQuery {{ livescores(from_date: \\\"{0}\\\", fixture_ids: [{1}], skip: {2}, take: {3}) {{ message_guid fixture_id provider_id sequence_number period_type_id status timestamp payload }} }}\",\"variables\":null,\"operationName\":\"MyQuery\"}}"
+  },
+  "ConnectionStrings": {
+    "Data": "server=${SECRET_DB_MYSQL_MAIN_HOST};UID=${SECRET_DB_MYSQL_MAIN_USERNAME};password=${SECRET_DB_MYSQL_MAIN_PASSWORD};database=data"
+  },
+  "servicestack": {
+    "license": "20729-e3JlZjoyMDcyOSxuYW1lOkxzcG9ydHMsdHlwZTpPcm1MaXRlQnVzaW5lc3MsbWV0YTowLGhhc2g6d01iS2xyT1ZubXJLY3FMVGo2NWJyWmRuamd5TC9wS1RDN2psUjJrZ0R4OUN0RW1xU1NXN2RsRFE4L2RsNVFOQ2UxNEV2aXhSQklDZXFWc0NLd2xnQjc3a25EWjg2SlVOTC9SeXU0eUdJcDNnMitJaUw3SXcwcmswY0JNVW8vR3ZCNmxJOXpTS0Z3Ny9lQ2FsM05VaXE1OUFDQkp2VE5sVzRxV2x2czJMUmJRPSxleHBpcnk6MjAyNC0wNy0yN30="
+  },
+  "RabbitMQ": [
+    {
+      "Name": "TrackChanges",
+      "Address": "${SECRET_MESSAGE_BROKER_RMQ_OS_ENDPOINT?${SECRET_MESSAGE_BROKER_RMQ_ENDPOINT}}",
+      "Port": 5672,
+      "User": "lsportsrunner",
+      "Password": "${SECRET_MESSAGE_BROKER_RMQ_OS_LSPORTSRUNNER_PASSWORD?${SECRET_MESSAGE_BROKER_RMQ_DIN_PASSWORD}}",
+      "VHost": "TrackChanges"
+    },
+    {
+      "Name": "Metadata",
+      "Address": "${SECRET_MESSAGE_BROKER_RMQ_OS_ENDPOINT?${SECRET_MESSAGE_BROKER_RMQ_ENDPOINT}}",
+      "Port": 5672,
+      "User": "lsportsrunner",
+      "Password": "${SECRET_MESSAGE_BROKER_RMQ_OS_LSPORTSRUNNER_PASSWORD?${SECRET_MESSAGE_BROKER_RMQ_DIN_PASSWORD}}",
+      "VHost": "Metadata"
+    }
+  ],
+  "LivescoreFirehoseConfig": {
+    "DeliveryStreamName": "livescore-archive",
+    "TimeoutSec": 30
+  },
+  "PreMatchResultingFirehoseConfig": {
+    "DeliveryStreamName": "prematch-resulting-archive-kinesis-firehose-stream",
+    "TimeoutSec": 30
+  },
+  "InPlayMarketsFirehoseConfig": {
+    "DeliveryStreamName": "inplay-markets-archive",
+    "TimeoutSec": 30
+  },
+  "PreMatchMarketsFirehoseConfig": {
+    "DeliveryStreamName": "prematch-markets-archive",
+    "TimeoutSec": 30
+  },
+  "InPlayResultingFirehoseConfig": {
+    "DeliveryStreamName": "inplay-resulting-archive-kinesis-firehose-stream",
+    "TimeoutSec": 30
+  },
+  "LivescoreDiagnosticFirehoseConfig": {
+    "DeliveryStreamName": "livescore-diagnostics-archive-kinesis-firehose-stream",
+    "TimeoutSec": 30
+  },
+  "FixturesFtDataFirehoseConfig": {
+    "DeliveryStreamName": "fixtures-ft-data-analysis",
+    "TimeoutSec": 30
+  },
+  "AmazonConfig": {
+    "Region": "eu-west-1",
+    "ClusterIdentifier": "lsports-dev-redshift",
+    "Database": "warehouse",
+    "SecretArn": "arn:aws:secretsmanager:eu-west-1:862877837751:secret:lsports-dev-redshift-top-secrets-37lxlx"
+  }
+}
